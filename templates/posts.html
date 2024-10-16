@@ -9,15 +9,22 @@ Posts
 
 {% block content %}
    <h1>Все статьи</h1>
+   <h4>Приветствую {{ user.username }}</h4>
    <h3>Статей на странице: {{ posts|length }}</h3>
    <hr>
-
+   {% if perms.news.add_post %}
+   <a href="http://127.0.0.1:8000/news/create/">Добавить новость</a>
+   <br>
+   <a href="http://127.0.0.1:8000/articles/create/">Добавить статью</a>
+   {% endif %}
+   <hr>
    {% if posts %}
        <table>
            <tr>
                <td>Заголовок</td>
                <td>Дата публикации</td>
                <td>Preview</td>
+               <td>Действие</td>
            </tr>
 
            {% for post in posts %}
@@ -25,6 +32,12 @@ Posts
                <td>{{ post.title }}</td>
                <td>{{ post.time_in|date:'M d Y' }}</td>
                <td>{{ post.text|truncatewords:20 }}</td>
+               {% if perms.news.change_post %}
+               <td><a href="http://127.0.0.1:8000/news/{{ post.id }}/edit">Изменить</a></td>
+               {% endif %}
+               {% if perms.news.delete_post %}
+               <td><a href="http://127.0.0.1:8000/news/{{ post.id }}/delete">Удалить</a></td>
+               {% endif %}
            </tr>
            {% endfor %}
        </table>
