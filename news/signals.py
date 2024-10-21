@@ -1,29 +1,20 @@
 from django.contrib.auth.models import User
 from django.core.mail import EmailMultiAlternatives
-from django.db.models.signals import post_save
+from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
 
-from .models import Post, Subscription
+from .models import PostCategory, Subscription
 
 
-@receiver(post_save, sender=Post)
-def post_created(instance, created, **kwargs):
-    if not created:
+@receiver(m2m_changed, sender=PostCategory)
+def post_created(sender, instance, **kwargs):
+    if not kwargs['action'] == 'post_add':
         return
 
     categories = instance.category.all()
-
-    print('***********************')
-    print(categories)
-    print('***********************')
-
     subscribers = Subscription.objects.filter(
         category__in=categories
     ).values_list('user', flat=True)
-
-    print('!!!!!!!!!!!!!!!!!!!!!!')
-    print(subscribers)
-    print('!!!!!!!!!!!!!!!!!!!!!!!!!!')
 
     emails = set()
     for sub in subscribers:
@@ -32,17 +23,16 @@ def post_created(instance, created, **kwargs):
         ).values_list('email', flat=True)
         emails.update(email_)
 
-    print('---------------------------------')
-    print(emails)
-    print('----------------------------------')
-    subject = f'Новый пост в категории {instance.category}'
+    subject = f'Новый пост в ваших категориях'
 
     text_content = (
         f'Заголовок: {instance.title}\n\n'
+        f'Preview: \n{instance.text[:150]}\n\n'
         f'Ссылка на пост: http://127.0.0.1:8000{instance.get_absolute_url()}'
     )
     html_content = (
         f'Заголовок: {instance.title}<br><br>'
+        f'Preview: <br>{instance.text[:150]}<br><br>'
         f'<a href="http://127.0.0.1{instance.get_absolute_url()}">'
         f'Ссылка на пост</a>'
     )
