@@ -59,8 +59,6 @@ class PostCreateNE(PermissionRequiredMixin, CreateView):
     def form_valid(self, form):
         post = form.save(commit=False)
         post.news_article = 'NE'
-        # post.save()
-        # send_created_news.delay(post_pk=post.pk)
         return super().form_valid(form)
 
 
@@ -74,7 +72,6 @@ class PostCreateAR(PermissionRequiredMixin, CreateView):
         post = form.save(commit=False)
         post.news_article = 'AR'
         return super().form_valid(form)
-
 
 
 class PostUpdate(PermissionRequiredMixin, UpdateView):
