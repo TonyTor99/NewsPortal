@@ -1,15 +1,17 @@
+from datetime import datetime
+
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import Exists, OuterRef
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from django.contrib.auth.mixins import PermissionRequiredMixin
-from .models import Post, Category, Subscription
-from datetime import datetime
+from django.core.cache import cache
+
 from .filters import PostFilter
 from .forms import PostForm
-from .tasks import send_created_news
-from django.urls import reverse_lazy
+from .models import Post, Category, Subscription
 
 
 class PostList(ListView):
@@ -27,9 +29,16 @@ class PostList(ListView):
 
 
 class PostDetail(DetailView):
-    model = Post
     template_name = 'post.html'
-    context_object_name = 'post'
+    queryset = Post.objects.all()
+
+    def get_object(self, *args, **kwargs):
+        obj = cache.get(f'post-{self.kwargs["pk"]}', None)
+
+        if not obj:
+            obj = super().get_object(queryset=self.queryset)
+            cache.set(f'post-{self.kwargs["pk"]}', obj)
+        return obj
 
 
 class PostFil(ListView):
