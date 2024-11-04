@@ -11,7 +11,7 @@ from django.core.cache import cache
 
 from .filters import PostFilter
 from .forms import PostForm
-from .models import Post, Category, Subscription
+from .models import Post, Category, Subscription, Author
 
 
 class PostList(ListView):
@@ -68,6 +68,7 @@ class PostCreateNE(PermissionRequiredMixin, CreateView):
     def form_valid(self, form):
         post = form.save(commit=False)
         post.news_article = 'NE'
+        post.author = Author.objects.get(user=self.request.user)
         return super().form_valid(form)
 
 
@@ -80,6 +81,7 @@ class PostCreateAR(PermissionRequiredMixin, CreateView):
     def form_valid(self, form):
         post = form.save(commit=False)
         post.news_article = 'AR'
+        post.author = Author.objects.get(user=self.request.user)
         return super().form_valid(form)
 
 

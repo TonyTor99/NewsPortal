@@ -1,16 +1,25 @@
-<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
 {% extends 'flatpages/default.html' %}
 
 {% load custom_filters %}
 
-<!-- Название у нас будет Product -->
 {% block title %}
 {{post.title}}
 {% endblock title %}
 
 {% block content %}
-    <h1>{{ post.title }}</h1>
-    <h2>{{ post.time_in|date:'M d Y' }}</h2>
+    <h1>Название: {{ post.title }}</h1>
+    <h2>Дата публикации: {{ post.time_in|date:'M d Y' }}</h2>
+    <h3>Автор: {{ post.author }}</h3>
+    <h5>Рейтинг поста: {{ post.rating_post }}</h5>
+    <h4>Категории:</h4>
+    <ul>
+        {% for category in post.category.all %}
+            <li>{{ category.cat_name }}</li>
+        {% empty %}
+            <li>Нет категорий</li>
+        {% endfor %}
+    </ul>
+
     <hr>
     <h3>{{ post.text }}</h3>
 {% endblock content %}
