@@ -1,10 +1,16 @@
-import django_filters
+from django import forms
 from django.forms import DateTimeInput
-from django_filters import FilterSet, DateTimeFilter, ModelChoiceFilter
+from django_filters import FilterSet, DateTimeFilter, ModelMultipleChoiceFilter, CharFilter
+
 from .models import Post, Category
 
 
 class PostFilter(FilterSet):
+    title = CharFilter(
+        lookup_expr='icontains',
+        label='Название'
+    )
+
     added_after = DateTimeFilter(
         field_name='time_in',
         lookup_expr='gt',
@@ -12,17 +18,18 @@ class PostFilter(FilterSet):
             format='%Y-%m-%dT%H:%M',
             attrs={'type': 'datetime-local'},
         ),
+        label='Опубликованы после'
     )
 
-    category = ModelChoiceFilter(
-        field_name='category',
+    category = ModelMultipleChoiceFilter(
         queryset=Category.objects.all(),
         to_field_name='id',
-        empty_label='любая категория'
+        widget=forms.CheckboxSelectMultiple,
+        label='Категории'
     )
 
-    class Meta:
-        model = Post
-        fields = {
-            'title': ['icontains']
-        }
+    # class Meta:
+    #     model = Post
+    #     fields = {
+    #         'title': ['icontains']
+    #     }

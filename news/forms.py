@@ -3,11 +3,21 @@ from .models import Post, Category
 
 
 class PostForm(forms.ModelForm):
-    text = forms.CharField(min_length=20)
+    title = forms.CharField(
+        min_length=20,
+        label='Название'
+    )
+
+    text = forms.CharField(
+        min_length=20,
+        label='Текст'
+    )
+
     category = forms.ModelMultipleChoiceField(
         queryset=Category.objects.all(),
         widget=forms.CheckboxSelectMultiple,
-        required=True
+        required=True,
+        label='Категории'
     )
 
     class Meta:

@@ -31,6 +31,7 @@ Posts
                <td>{{ post.title }}</td>
                <td>{{ post.time_in|date:'M d Y' }}</td>
                <td>{{ post.text|truncatewords:20 }}</td>
+               <td><a href="http://127.0.0.1:8000/news/{{ post.id }}">Просмотреть</a> </td>
            </tr>
            {% endfor %}
        </table>
