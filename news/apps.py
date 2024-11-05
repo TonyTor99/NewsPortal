@@ -1,4 +1,5 @@
 from django.apps import AppConfig
+from .signals import *
 
 
 class NewsConfig(AppConfig):
@@ -6,4 +7,5 @@ class NewsConfig(AppConfig):
     name = 'news'
 
     def ready(self):
-        from . import signals
+        post_created()
+        post_save()
