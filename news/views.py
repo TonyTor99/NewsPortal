@@ -59,6 +59,18 @@ class PostFil(ListView):
         return context
 
 
+class MyPosts(ListView):
+    model = Post
+    ordering = '-time_in'
+    template_name = 'my_posts.html'
+    context_object_name = 'posts'
+    paginate_by = 10
+
+    def get_queryset(self):
+        user = self.request.user
+        return Post.objects.filter(author=user.author.id).order_by(self.ordering)
+
+
 class PostCreateNE(PermissionRequiredMixin, CreateView):
     permission_required = ('news.add_post',)
     form_class = PostForm
@@ -128,3 +140,11 @@ def subscriptions(request):
         'subscriptions.html',
         {'categories': categories_with_subscriptions},
     )
+
+
+# @login_required
+# def post_list(request):
+#     user = request.user
+#     posts = Post.objects.filter(author=user) # Фильтруем посты по автору
+#     context = {'posts': posts}
+#     return render(request, 'news/post_list.html', context)

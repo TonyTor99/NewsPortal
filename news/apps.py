@@ -1,5 +1,4 @@
 from django.apps import AppConfig
-from .signals import *
 
 
 class NewsConfig(AppConfig):
@@ -7,5 +6,4 @@ class NewsConfig(AppConfig):
     name = 'news'
 
     def ready(self):
-        post_created()
-        post_save()
+        pass

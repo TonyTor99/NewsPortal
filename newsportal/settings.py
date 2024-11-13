@@ -158,7 +158,6 @@ EMAIL_HOST_USER = "shpenov1@yandex.ru"
 EMAIL_HOST_PASSWORD = "uwiamzuzflocmcst"
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
-
 DEFAULT_FROM_EMAIL = "shpenov1@yandex.ru"
 
 CELERY_BROKER_URL = 'redis://localhost:6379'
@@ -169,8 +168,8 @@ CELERY_RESULT_SERIALIZER = 'json'
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': os.path.join(BASE_DIR, 'cache_files'),
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'cache_data',
         'TIMEOUT': 100,
     }
 }

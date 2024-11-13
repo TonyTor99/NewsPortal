@@ -36,7 +36,7 @@ Posts
            <tr>
                <td>{{ post.title }}</td>
                <td></td>
-               <td>{{ post.time_in|date:'M d Y' }}</td>
+               <td>{{ post.time_in|date:'M j, Y H:i' }}</td>
                <td></td>
                <td>{{ post.text|truncatewords:20 }}</td>
                <td></td>
@@ -44,11 +44,11 @@ Posts
                <td></td>
                <td><a href="http://127.0.0.1:8000/news/{{ post.id }}">Просмотреть</a> </td>
                <td></td>
-               {% if perms.news.change_post %}
+               {% if perms.news.change_post and post.author.user_id == user.id or user.is_superuser %}
                <td><a href="http://127.0.0.1:8000/news/{{ post.id }}/edit">Изменить</a></td>
                {% endif %}
                <td></td>
-               {% if perms.news.delete_post %}
+               {% if perms.news.delete_post and post.author.user_id == user.id or user.is_superuser %}
                <td><a href="http://127.0.0.1:8000/news/{{ post.id }}/delete">Удалить</a></td>
                {% endif %}
            </tr>
