@@ -35,13 +35,13 @@ My Posts
                <td><a href="http://127.0.0.1:8000/news/{{ post.id }}/edit">Изменить</a></td>
                {% endif %}
                <td></td>
-               {% if perms.news.delete_post and post.author.user_id == user.id %}
+               {% if post.author.user_id == user.id %}
                <td><a href="http://127.0.0.1:8000/news/{{ post.id }}/delete">Удалить</a></td>
                {% endif %}
            </tr>
            {% endfor %}
        </table>
    {% else %}
-       <h2>Товаров нет!</h2>
+       <h2>Постов нет!</h2>
    {% endif %}
 {% endblock content %}
