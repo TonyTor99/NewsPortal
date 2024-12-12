@@ -1,24 +1,25 @@
 {% extends 'flatpages/default.html' %}
 
+{% load i18n %}
 {% load custom_filters %}
 
 {% block title %}
-My Posts
+{% trans "My posts" %}
 {% endblock title %}
 
 {% block content %}
-    <h1>Мои посты</h1>
+    <h1>{% trans "My posts" %}</h1>
     <hr>
     {% if posts %}
        <table>
            <tr>
-               <td>Заголовок</td>
+               <td>{% trans "Heading" %}</td>
                <td></td>
-               <td>Дата публикации</td>
+               <td>{% trans "Date of publication" %}</td>
                <td></td>
-               <td>Preview</td>
+               <td>{% trans "Preview" %}</td>
                <td></td>
-               <td>Действие</td>
+               <td>{% trans "Action"%}</td>
            </tr>
 
            {% for post in posts %}
@@ -29,19 +30,19 @@ My Posts
                <td></td>
                <td>{{ post.text|truncatewords:20 }}</td>
                <td></td>
-               <td><a href="http://127.0.0.1:8000/news/{{ post.id }}">Просмотреть</a> </td>
+               <td><a href="http://127.0.0.1:8000/news/{{ post.id }}">{% trans "Browse" %}</a> </td>
                <td></td>
                {% if perms.news.change_post and post.author.user_id == user.id %}
-               <td><a href="http://127.0.0.1:8000/news/{{ post.id }}/edit">Изменить</a></td>
+               <td><a href="http://127.0.0.1:8000/news/{{ post.id }}/edit">{% trans "Change" %}</a></td>
                {% endif %}
                <td></td>
                {% if post.author.user_id == user.id %}
-               <td><a href="http://127.0.0.1:8000/news/{{ post.id }}/delete">Удалить</a></td>
+               <td><a href="http://127.0.0.1:8000/news/{{ post.id }}/delete">{% trans "Delete" %}</a></td>
                {% endif %}
            </tr>
            {% endfor %}
        </table>
    {% else %}
-       <h2>Постов нет!</h2>
+       <h2>{% trans "Have no posts" %}</h2>
    {% endif %}
 {% endblock content %}

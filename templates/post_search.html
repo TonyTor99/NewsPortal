@@ -1,15 +1,16 @@
 {% extends 'flatpages/default.html' %}
 
+{% load i18n %}
 {% load custom_filters %}
 {% load custom_tags %}
 
 {% block title %}
-Posts
+{% trans "Posts" %}
 {% endblock title %}
 
 {% block content %}
-   <h1>Поиск статей</h1>
-   <h3>Статей на странице: {{ posts|length }}</h3>
+   <h1>{% trans "Search for posts" %}</h1>
+   <h3>{% trans "Posts on the page:" %} {{ posts|length }}</h3>
    <hr>
 
    <form action="" method="get">
@@ -21,9 +22,9 @@ Posts
    {% if posts %}
        <table>
            <tr>
-               <td>Заголовок</td>
-               <td>Дата публикации</td>
-               <td>Preview</td>
+               <td>{% trans "Heading" %}</td>
+               <td>{% trans "Date of publication" %}</td>
+               <td>{% trans "Preview" %}</td>
            </tr>
 
            {% for post in posts %}
@@ -31,12 +32,12 @@ Posts
                <td>{{ post.title }}</td>
                <td>{{ post.time_in|date:'M d Y' }}</td>
                <td>{{ post.text|truncatewords:20 }}</td>
-               <td><a href="http://127.0.0.1:8000/news/{{ post.id }}">Просмотреть</a> </td>
+               <td><a href="http://127.0.0.1:8000/news/{{ post.id }}">{% trans "Browse" %}</a> </td>
            </tr>
            {% endfor %}
        </table>
    {% else %}
-       <h2>Статей с похожим названием нет!</h2>
+       <h2>{% trans "There are no posts with a similar title!" %}</h2>
    {% endif %}
 
    {% if page_obj.has_previous %}

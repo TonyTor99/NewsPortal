@@ -10,7 +10,8 @@ class PostForm(forms.ModelForm):
 
     text = forms.CharField(
         min_length=20,
-        label='Текст'
+        label='Текст',
+        widget=forms.Textarea
     )
 
     category = forms.ModelMultipleChoiceField(

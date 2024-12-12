@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+
+{% load i18n %}
+
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -21,14 +24,33 @@
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                                <li class="nav-item"><form action="{% url 'set_language' %}" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="next" value="{{ redirect_to }}">
+                                <label for="language"><span style="...">{% trans 'Language' %}: </span> </label>
+                                <select name="language" id="language" onchange="this.form.submit();">
+                                    <option value="none" hidden="">{% trans "English" %}</option>
+                                    {% get_available_languages as LANGUAGES %}
+                                    {% get_language_info_list for LANGUAGES as languages %}
+                                    {% for language in languages %}
+                                        <option value="{{ language.code }}"
+                                                {% if language.code == LANGUAGE_CODE %}
+                                                selected
+                                                {% endif %}>
+                                            {{ language.name_local }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                                </form></li>
                                 {% if user.is_authenticated%}
                                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">{{ user.username }}</a></li>
                                 {% else %}
-                                <li class="nav-item"><a class="nav-link active" aria-current="page" href="http://127.0.0.1:8000/accounts/login/">Вход/Регистрация</a></li>
+                                <li class="nav-item"><a class="nav-link active" aria-current="page" href="http://127.0.0.1:8000/accounts/login/">{% trans "Login/Registration" %}</a></li>
                                 {% endif %}
                                 {% if user.is_authenticated%}
-                                <li class="nav-item"><a class="nav-link active" aria-current="page" href="http://127.0.0.1:8000/news/myposts/">Мои посты</a></li>
-                                <li class="nav-item"><a class="nav-link" href="http://127.0.0.1:8000/accounts/logout/">Выход</a></li>
+                                <li class="nav-item"><a class="nav-link active" aria-current="page" href="http://127.0.0.1:8000/news/myposts/">{% trans "My posts" %}</a></li>
+                                <li class="nav-item"><a class="nav-link active" aria-current="page" href="http://127.0.0.1:8000/subscriptions/">{% trans "My subscriptions" %}</a></li>
+                                <li class="nav-item"><a class="nav-link" href="http://127.0.0.1:8000/accounts/logout/">{% trans "Log Out" %}</a></li>
                                 {% endif %}
                             </ul>
                         </div>
