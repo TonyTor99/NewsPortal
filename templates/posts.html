@@ -5,32 +5,32 @@
 {% load custom_tags %}
 
 {% block title %}
-{% trans "Posts" %}
+{% trans "Посты" %}
 {% endblock title %}
 
 {% block content %}
-   <h1>{% trans "All posts" %}</h1>
-   <a href="http://127.0.0.1:8000/news/search">{% trans "Find an post" %}</a>
-   <h3>{% trans "Posts on the page:" %} {{ posts|length }}</h3>
+   <h1>{% trans "Все посты" %}</h1>
+   <a href="http://127.0.0.1:8000/news/search">{% trans "Найти пост" %}</a>
+   <h3>{% trans "Постов на странице:" %} {{ posts|length }}</h3>
    <hr>
    {% if perms.news.add_post %}
-   <a href="http://127.0.0.1:8000/news/create/">{% trans "Add a news item" %}</a>
+   <a href="http://127.0.0.1:8000/news/create/">{% trans "Добавить новость" %}</a>
    <br>
-   <a href="http://127.0.0.1:8000/articles/create/">{% trans "Add an article" %}</a>
+   <a href="http://127.0.0.1:8000/articles/create/">{% trans "Добавить статью" %}</a>
    <hr>
    {% endif %}
    {% if posts %}
        <table>
            <tr>
-               <td>{% trans "Heading" %}</td>
+               <td>{% trans "Название" %}</td>
                <td></td>
-               <td>{% trans "Date of publication" %}</td>
+               <td>{% trans "Дата публикации" %}</td>
                <td></td>
-               <td>{% trans "Preview" %}</td>
+               <td>{% trans "Превью" %}</td>
                <td></td>
-               <td>{% trans "Author" %}</td>
+               <td>{% trans "Автор" %}</td>
                <td></td>
-               <td>{% trans "Action" %}</td>
+               <td>{% trans "Действия" %}</td>
            </tr>
 
            {% for post in posts %}
@@ -43,20 +43,20 @@
                <td></td>
                <td>{{ post.author }}</td>
                <td></td>
-               <td><a href="http://127.0.0.1:8000/news/{{ post.id }}">{% trans "Browse" %}</a> </td>
+               <td><a href="http://127.0.0.1:8000/news/{{ post.id }}">{% trans "Просмотреть" %}</a> </td>
                <td></td>
                {% if user.is_superuser %}
-               <td><a href="http://127.0.0.1:8000/news/{{ post.id }}/edit">{% trans "Change" %}</a></td>
+               <td><a href="http://127.0.0.1:8000/news/{{ post.id }}/edit">{% trans "Изменить" %}</a></td>
                {% endif %}
                <td></td>
                {% if perms.news.delete_post and post.author.user_id == user.id or user.is_superuser %}
-               <td><a href="http://127.0.0.1:8000/news/{{ post.id }}/delete">{% trans "Delete" %}</a></td>
+               <td><a href="http://127.0.0.1:8000/news/{{ post.id }}/delete">{% trans "Удалить" %}</a></td>
                {% endif %}
            </tr>
            {% endfor %}
        </table>
    {% else %}
-       <h2>{% trans "There are no posts!" %}</h2>
+       <h2>{% trans "Нет постов!" %}</h2>
    {% endif %}
 
    {% if page_obj.has_previous %}

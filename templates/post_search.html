@@ -5,12 +5,12 @@
 {% load custom_tags %}
 
 {% block title %}
-{% trans "Posts" %}
+{% trans "Посты" %}
 {% endblock title %}
 
 {% block content %}
-   <h1>{% trans "Search for posts" %}</h1>
-   <h3>{% trans "Posts on the page:" %} {{ posts|length }}</h3>
+   <h1>{% trans "Найти пост" %}</h1>
+   <h3>{% trans "Постов на странице:" %} {{ posts|length }}</h3>
    <hr>
 
    <form action="" method="get">
@@ -22,9 +22,9 @@
    {% if posts %}
        <table>
            <tr>
-               <td>{% trans "Heading" %}</td>
-               <td>{% trans "Date of publication" %}</td>
-               <td>{% trans "Preview" %}</td>
+               <td>{% trans "Название" %}</td>
+               <td>{% trans "Дата публикации" %}</td>
+               <td>{% trans "Превью" %}</td>
            </tr>
 
            {% for post in posts %}
@@ -32,12 +32,12 @@
                <td>{{ post.title }}</td>
                <td>{{ post.time_in|date:'M d Y' }}</td>
                <td>{{ post.text|truncatewords:20 }}</td>
-               <td><a href="http://127.0.0.1:8000/news/{{ post.id }}">{% trans "Browse" %}</a> </td>
+               <td><a href="http://127.0.0.1:8000/news/{{ post.id }}">{% trans "Просмотреть" %}</a> </td>
            </tr>
            {% endfor %}
        </table>
    {% else %}
-       <h2>{% trans "There are no posts with a similar title!" %}</h2>
+       <h2>{% trans "Нет постов с такими параметрами!" %}</h2>
    {% endif %}
 
    {% if page_obj.has_previous %}

@@ -1,5 +1,16 @@
 from django.contrib import admin
 from .models import Author, Post, Category, Comment
+from modeltranslation.admin import TranslationAdmin
+
+
+class CategoryTranslationAdmin(TranslationAdmin):
+
+    model = Category
+
+
+class PostTranslationAdmin(TranslationAdmin):
+
+    model = Post
 
 
 def nullfy_rating(modeladmin, request, queryset):

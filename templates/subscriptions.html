@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block title %}
-{% trans "Subscriptions" %}
+{% trans "Подписки" %}
 {% endblock title %}
 
 {% block content %}
@@ -15,11 +15,11 @@
                 <input type="hidden" name="category_id" value="{{ category.id }}" />
 
                 {% if category.user_subscribed %}
-                    <button disabled>{% trans "Subscribe" %}</button>
-                    <button name="action" value="unsubscribe">{% trans "Unsubscribe" %}</button>
+                    <button disabled>{% trans "Подписаться" %}</button>
+                    <button name="action" value="unsubscribe">{% trans "Отписаться" %}</button>
                 {% else %}
-                    <button name="action" value="subscribe">{% trans "Subscribe" %}</button>
-                    <button disabled>{% trans "Unsubscribe" %}</button>
+                    <button name="action" value="subscribe">{% trans "Подписаться" %}</button>
+                    <button disabled>{% trans "Отписаться" %}</button>
                 {% endif %}
             </form>
         </p>

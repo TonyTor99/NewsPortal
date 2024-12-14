@@ -4,22 +4,22 @@
 {% load custom_filters %}
 
 {% block title %}
-{% trans "My posts" %}
+{% trans "Мои посты" %}
 {% endblock title %}
 
 {% block content %}
-    <h1>{% trans "My posts" %}</h1>
+    <h1>{% trans "Мои посты" %}</h1>
     <hr>
     {% if posts %}
        <table>
            <tr>
-               <td>{% trans "Heading" %}</td>
+               <td>{% trans "Название" %}</td>
                <td></td>
-               <td>{% trans "Date of publication" %}</td>
+               <td>{% trans "Дата публикации" %}</td>
                <td></td>
-               <td>{% trans "Preview" %}</td>
+               <td>{% trans "Превью" %}</td>
                <td></td>
-               <td>{% trans "Action"%}</td>
+               <td>{% trans "Действия"%}</td>
            </tr>
 
            {% for post in posts %}
@@ -30,19 +30,19 @@
                <td></td>
                <td>{{ post.text|truncatewords:20 }}</td>
                <td></td>
-               <td><a href="http://127.0.0.1:8000/news/{{ post.id }}">{% trans "Browse" %}</a> </td>
+               <td><a href="http://127.0.0.1:8000/news/{{ post.id }}">{% trans "Просмотреть" %}</a> </td>
                <td></td>
                {% if perms.news.change_post and post.author.user_id == user.id %}
-               <td><a href="http://127.0.0.1:8000/news/{{ post.id }}/edit">{% trans "Change" %}</a></td>
+               <td><a href="http://127.0.0.1:8000/news/{{ post.id }}/edit">{% trans "Изменить" %}</a></td>
                {% endif %}
                <td></td>
                {% if post.author.user_id == user.id %}
-               <td><a href="http://127.0.0.1:8000/news/{{ post.id }}/delete">{% trans "Delete" %}</a></td>
+               <td><a href="http://127.0.0.1:8000/news/{{ post.id }}/delete">{% trans "Удалить" %}</a></td>
                {% endif %}
            </tr>
            {% endfor %}
        </table>
    {% else %}
-       <h2>{% trans "Have no posts" %}</h2>
+       <h2>{% trans "Нет постов" %}</h2>
    {% endif %}
 {% endblock content %}

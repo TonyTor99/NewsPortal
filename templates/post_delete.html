@@ -3,11 +3,11 @@
 {% load i18n %}
 
 {% block content %}
-<h1>{% trans "Deleting a post" %}</h1>
+<h1>{% trans "Удалить пост" %}</h1>
 <hr>
 <form action="" method="post">
     {% csrf_token %}
-    <p>{% trans "Delete" %} "{{ object.title }}"?</p>
+    <p>{% trans "Удалить" %} "{{ object.title }}"?</p>
     <input type="submit" value="Delete" />
 </form>
 {% endblock content %}
