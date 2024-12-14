@@ -1,13 +1,16 @@
 from datetime import datetime
+import pytz
 
+from django.views import View
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import Exists, OuterRef
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.core.cache import cache
+from django.utils import timezone
 
 from .filters import PostFilter
 from .forms import PostForm
@@ -142,9 +145,17 @@ def subscriptions(request):
     )
 
 
-# @login_required
-# def post_list(request):
-#     user = request.user
-#     posts = Post.objects.filter(author=user) # Фильтруем посты по автору
-#     context = {'posts': posts}
-#     return render(request, 'news/post_list.html', context)
+def set_timezone(request):
+    if request.method == 'POST':
+        tzname = request.POST.get('timezone')  # Получаем выбранный часовой пояс
+        if tzname in pytz.all_timezones:  # Проверяем его корректность
+            request.session['django_timezone'] = tzname  # Сохраняем в сессии
+            timezone.activate(tzname)  # Активируем
+    return redirect(request.META.get('HTTP_REFERER', '/'))  # Перенаправляем обратно
+
+
+def time_now(request):
+    context = {
+        'current_time': timezone.localtime(timezone.now()),  # Локализованное время
+    }
+    return render(request, 'default.html', context)

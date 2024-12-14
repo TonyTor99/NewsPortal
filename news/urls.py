@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import PostList, PostDetail, PostFil, PostCreateNE, PostUpdate, PostDelete, MyPosts
+from .views import PostList, PostDetail, PostFil, PostCreateNE, PostUpdate, PostDelete, MyPosts, set_timezone
 
 
 urlpatterns = [
@@ -11,4 +11,5 @@ urlpatterns = [
     path('<int:pk>/edit/', PostUpdate.as_view(), name='post_update_ne'),
     path('<int:pk>/delete/', PostDelete.as_view(), name='post_delete_ne'),
     path('myposts/', MyPosts.as_view(), name='my_posts'),
+    path('set_timezone/', set_timezone, name='set_timezone'),
 ]
