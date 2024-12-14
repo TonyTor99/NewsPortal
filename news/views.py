@@ -152,10 +152,3 @@ def set_timezone(request):
             request.session['django_timezone'] = tzname  # Сохраняем в сессии
             timezone.activate(tzname)  # Активируем
     return redirect(request.META.get('HTTP_REFERER', '/'))  # Перенаправляем обратно
-
-
-def time_now(request):
-    context = {
-        'current_time': timezone.localtime(timezone.now()),  # Локализованное время
-    }
-    return render(request, 'default.html', context)

@@ -18,7 +18,7 @@
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
         <style>
         body {background-color: {% if current_time.hour >= 19 or current_time.hour <= 7 %} darkcyan {% else %} powderblue {% endif %};}
-    </style>
+        </style>
     </head>
             <body>
                 <!-- Responsive navbar-->
@@ -32,7 +32,7 @@
                                 <li class="nav-item"><form action="{% url 'set_language' %}" method="POST">
                                 {% csrf_token %}
                                 <input type="hidden" name="next" value="{{ redirect_to }}">
-                                <label for="language"><span style="...">{% trans 'Язык' %}: </span> </label>
+                                <label for="language"><span style="color: white">{% trans 'Язык' %}: </span> </label>
                                 <select name="language" id="language" onchange="this.form.submit();">
                                     <option value="none" hidden="">{% trans "Смена языка" %}</option>
                                     {% get_available_languages as LANGUAGES %}
@@ -50,7 +50,7 @@
 
                                 <form method="POST" action="{% url 'set_timezone' %}">
                                     {% csrf_token %}
-                                    <label for="timezone" style="collor: white">Часовой пояс:</label>
+                                    <label for="timezone" style="color: white">Часовой пояс:</label>
                                     <select name="timezone">
                                         {% for tz in timezones %}
                                             <option value="{{ tz }}" {% if tz == current_timezone %}selected{% endif %}>
@@ -58,7 +58,7 @@
                                             </option>
                                         {% endfor %}
                                     </select>
-                                    <button type="submit">Установить</button>
+                                    <button type="submit">Set</button>
                                 </form>
 
                                 {% if user.is_authenticated%}
